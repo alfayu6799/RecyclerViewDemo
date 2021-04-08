@@ -1,13 +1,7 @@
 package com.example.recyclerviewdemo;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.os.Bundle;
-import android.util.JsonWriter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,7 +11,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initData() {
         String myJson = getJsonFromAssets(MainActivity.this,"json.json");
 
+        ArrayList<String> value2 = new ArrayList<>();
+
         try {
             JSONObject jsonObject = new JSONObject(myJson.toString());
             JSONArray array = jsonObject.getJSONArray("success");
@@ -50,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (value instanceof Boolean){
 
                 }else if (value instanceof JSONArray){
-
+                    for(int j=0; j < ((JSONArray) value).length(); j++){
+                        value2.add(((JSONArray) value).getString(j));
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -62,10 +65,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        CheckBoxAdapter checkBoxAdapter = new CheckBoxAdapter(this);
+        CheckBoxAdapter checkBoxAdapter = new CheckBoxAdapter(this, value2);
         getRecyclerView.setAdapter(checkBoxAdapter);
         getRecyclerView.setHasFixedSize(true);
-        getRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        getRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
     }
 
     private void initView() {

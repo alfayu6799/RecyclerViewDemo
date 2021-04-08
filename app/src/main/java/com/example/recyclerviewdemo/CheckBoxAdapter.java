@@ -7,15 +7,20 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHolder>{
 
     private Context context;
+    private ArrayList<String> arrayList;
 
-    public CheckBoxAdapter(Context context) {
+
+    public CheckBoxAdapter(Context context, ArrayList<String> arrayList) {
         this.context = context;
+        this.arrayList = arrayList;
     }
 
     @NonNull
@@ -27,13 +32,13 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvTitle.setText("痰");
-        holder.tvTitleSub.setText("顏色");
+        //holder.tvTitle.setText("痰");
+        //holder.tvTitleSub.setText("顏色");
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return arrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
