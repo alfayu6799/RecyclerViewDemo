@@ -8,6 +8,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.JsonWriter;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,11 +19,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
 
     private RecyclerView recyclerView, getRecyclerView;
+
+    private Button update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         String myJson = getJsonFromAssets(MainActivity.this,"json.json");
-
-
 
         try {
             JSONObject jsonObject = new JSONObject(myJson.toString());
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         recyclerView = findViewById(R.id.rvSymptomUp);
         getRecyclerView = findViewById(R.id.rvSymptomDown);
+        update = findViewById(R.id.btnUpdate);
+        update.setOnClickListener(this);
     }
 
     public static String getJsonFromAssets(Context context, String fileName) {
@@ -88,5 +92,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return jsonString;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnUpdate:
+                updateToApi();
+                break;
+        }
+    }
+
+    //上傳資料到後端
+    private void updateToApi() {
     }
 }
