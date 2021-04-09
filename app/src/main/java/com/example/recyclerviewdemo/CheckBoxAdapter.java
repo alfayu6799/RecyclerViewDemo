@@ -1,6 +1,7 @@
 package com.example.recyclerviewdemo;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,23 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHolder>{
 
-    private Context context;
+    private static final String TAG = "CheckBoxAdapter";
 
-    public CheckBoxAdapter(Context context) {
+    private Context context;
+//    private ArrayList<TestData.CheckBoxGroup> arrayList = new ArrayList<>();
+    private List<TestData.CheckBoxGroup> checkBoxGroupList;
+
+    public CheckBoxAdapter(Context context, List<TestData.CheckBoxGroup> checkBoxGroupList) {
         this.context = context;
+        this.checkBoxGroupList = checkBoxGroupList;
     }
 
     @NonNull
@@ -27,26 +37,29 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvTitle.setText("痰");
-        holder.tvTitleSub.setText("顏色");
+
+//            holder.subRecycler.setAdapter();
+//            holder.subRecycler.setHasFixedSize(true);
+//            holder.subRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvTitle;
         TextView tvTitleSub;
-        CheckBox checkBox;
+        RecyclerView subRecycler;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvSympTitlle);
             tvTitleSub = itemView.findViewById(R.id.tvSympSub);
-            checkBox = itemView.findViewById(R.id.chkSymptom);
+            subRecycler = itemView.findViewById(R.id.rvSub);
         }
     }
 }

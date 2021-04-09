@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">RecyclerViewDemo</string>
+    <string name="app_name" translatable="false">RecyclerViewDemo</string>
+
+    <string name="headache" translatable="false">頭痛</string>
+    <string name="fatigue" translatable="false">疲勞</string>
+    <string name="soreMusclesJoints" translatable="false">肌肉痠痛</string>
+    <string name="soreThroat" translatable="false">咽喉痛</string>
+    <string name="cough" translatable="false">咳嗽</string>
+    <string name="runnyNose" translatable="false">流鼻涕</string>
+    <string name="diarrhea" translatable="false">腹瀉</string>
+    <string name="chestTightness" translatable="false">胸悶</string>
+    <string name="shortnessBreath" translatable="false">呼吸急促</string>
+    <string name="taste" translatable="false">味覺</string>
+    <string name="vomiting" translatable="false">嘔吐</string>
+    <string name="sputum" translatable="false">痰</string>
+    <string name="nose" translatable="false">鼻涕</string>
+    <string name="color" translatable="false">顏色</string>
+    <string name="type" translatable="false">型態</string>
 </resources>

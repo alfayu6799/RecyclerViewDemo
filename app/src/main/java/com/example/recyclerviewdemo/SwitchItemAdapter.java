@@ -10,13 +10,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.ViewHolder>{
 
     private Context context;
+    ArrayList<Object> booleanArrayList;
 
     public SwitchItemAdapter(Context context) {
         this.context = context;
     }
+
+//    public SwitchItemAdapter(Context context, List<TestData> testDataList) {
+//        this.context = context;
+//        this.testDataList = testDataList;
+//    }
 
     @NonNull
     @Override
@@ -27,13 +36,13 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textName.setText("頭痛");
-        holder.aSwitch.setChecked(false);
+        //holder.textName.setText("頭痛");
+        //holder.aSwitch.setChecked(false);
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

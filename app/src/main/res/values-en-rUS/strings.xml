@@ -1,0 +1,17 @@
+<resources>
+    <string name="headache" translatable="false">Headache</string>
+    <string name="fatigue" translatable="false">Fatigue</string>
+    <string name="soreMusclesJoints" translatable="false">SoreMusclesJoints</string>
+    <string name="soreThroat" translatable="false">SoreThroat</string>
+    <string name="cough" translatable="false">Cough</string>
+    <string name="runnyNose" translatable="false">RunnyNose</string>
+    <string name="diarrhea" translatable="false">Diarrhea</string>
+    <string name="chestTightness" translatable="false">ChestTightness</string>
+    <string name="shortnessBreath" translatable="false">ShortnessBreath</string>
+    <string name="taste" translatable="false">Taste</string>
+    <string name="vomiting" translatable="false">Vomiting</string>
+    <string name="sputum" translatable="false">Sputum</string>
+    <string name="nose" translatable="false">Nose</string>
+    <string name="color" translatable="false">Color</string>
+    <string name="type" translatable="false">Type</string>
+</resources>
