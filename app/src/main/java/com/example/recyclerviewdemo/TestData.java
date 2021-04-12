@@ -23,8 +23,7 @@ public class TestData {
                 String key = newObject.getString("key");
                 Object value = newObject.get("value");
                 if (value instanceof Boolean){
-
-
+                    TestData.SwitchItemBean data = new TestData.SwitchItemBean(key, (Boolean) value);
                 }else if (value instanceof JSONArray){
 
                 }
@@ -43,11 +42,21 @@ public class TestData {
     public static class SwitchItemBean {
         private String key;
         private boolean value;
+
+        public SwitchItemBean(String key, boolean value){
+            this.key = key;
+            this.value = value;
+        }
     }
 
     public static class CheckBoxGroup {
         private String key;
         private List<String > value;
+
+        public CheckBoxGroup(String key, List<String> value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 
     public int getErrorCode() {

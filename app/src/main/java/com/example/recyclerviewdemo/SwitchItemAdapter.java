@@ -1,9 +1,11 @@
 package com.example.recyclerviewdemo;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -15,17 +17,17 @@ import java.util.List;
 
 public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.ViewHolder>{
 
+    private static final String TAG = "SwitchItemAdapter";
+
     private Context context;
-    ArrayList<Object> booleanArrayList;
+    private List<Test1.InfoBean> infoBeanList = new ArrayList<>();
 
-    public SwitchItemAdapter(Context context) {
+    private List<TestData.SwitchItemBean> switchItemBeanList = new ArrayList<>();
+
+    public SwitchItemAdapter(Context context, List<Test1.InfoBean> infoBeanList) {
         this.context = context;
+        this.infoBeanList = infoBeanList;
     }
-
-//    public SwitchItemAdapter(Context context, List<TestData> testDataList) {
-//        this.context = context;
-//        this.testDataList = testDataList;
-//    }
 
     @NonNull
     @Override
@@ -36,13 +38,25 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.textName.setText("頭痛");
-        //holder.aSwitch.setChecked(false);
+        holder.textName.setText(infoBeanList.get(position).getKey());
+        holder.aSwitch.setChecked(infoBeanList.get(position).isValue());
+        holder.aSwitch.setText("No");
+        holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    Log.d(TAG, "onCheckedChanged: " + infoBeanList.get(position).getKey());
+                    holder.aSwitch.setText("Yes");
+                }else {
+                    holder.aSwitch.setText("No");
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return infoBeanList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

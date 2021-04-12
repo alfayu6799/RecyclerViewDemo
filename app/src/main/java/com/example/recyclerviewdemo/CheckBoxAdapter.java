@@ -20,12 +20,12 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
     private static final String TAG = "CheckBoxAdapter";
 
     private Context context;
-//    private ArrayList<TestData.CheckBoxGroup> arrayList = new ArrayList<>();
-    private List<TestData.CheckBoxGroup> checkBoxGroupList;
 
-    public CheckBoxAdapter(Context context, List<TestData.CheckBoxGroup> checkBoxGroupList) {
+    private List<Test2.InfoBean> infoBeanList2= new ArrayList<>();
+
+    public CheckBoxAdapter(Context context, List<Test2.InfoBean> infoBeanList2) {
         this.context = context;
-        this.checkBoxGroupList = checkBoxGroupList;
+        this.infoBeanList2 = infoBeanList2;
     }
 
     @NonNull
@@ -37,16 +37,20 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+          String[] str = infoBeanList2.get(position).getKey().split(",");  //以,切割
 
-//            holder.subRecycler.setAdapter();
-//            holder.subRecycler.setHasFixedSize(true);
-//            holder.subRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+          holder.tvTitle.setText(str[0]);     //痰.鼻涕
+          holder.tvTitleSub.setText(str[1]);  //顏色,型態
 
+          CheckBoxSubAdapter adapter = new CheckBoxSubAdapter(context, infoBeanList2.get(position).getValue());
+          holder.subRecycler.setAdapter(adapter);
+          holder.subRecycler.setHasFixedSize(true);
+          holder.subRecycler.setLayoutManager(new GridLayoutManager(context, 2));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return infoBeanList2.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
