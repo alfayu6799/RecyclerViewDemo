@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHolder>{
@@ -36,15 +38,19 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-          String[] str = checkBoxGroupList.get(position).getKey().split(",");  //以,切割
+        Dictionary dictionary = getDictionary();
 
-          holder.tvTitle.setText(str[0]);     //痰.鼻涕
-          holder.tvTitleSub.setText(str[1]);  //顏色,型態
+        String[] str = checkBoxGroupList.get(position).getKey().split(",");
+        String title = str[0];
+        String titleSub = str[1];
 
-          CheckBoxSubAdapter adapter = new CheckBoxSubAdapter(context, checkBoxGroupList.get(position).getValue());
-          holder.subRecycler.setAdapter(adapter);
-          holder.subRecycler.setHasFixedSize(true);
-          holder.subRecycler.setLayoutManager(new GridLayoutManager(context, 2));
+        holder.tvTitle.setText((CharSequence) dictionary.get(title));
+        holder.tvTitleSub.setText((CharSequence) dictionary.get(titleSub));
+
+        CheckBoxSubAdapter adapter = new CheckBoxSubAdapter(context, checkBoxGroupList.get(position).getValue());
+        holder.subRecycler.setAdapter(adapter);
+        holder.subRecycler.setHasFixedSize(true);
+        holder.subRecycler.setLayoutManager(new GridLayoutManager(context, 2));
     }
 
     @Override
@@ -64,5 +70,15 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
             tvTitleSub = itemView.findViewById(R.id.tvSympSub);
             subRecycler = itemView.findViewById(R.id.rvSub);
         }
+    }
+
+    private Dictionary getDictionary(){
+        Dictionary dictionary = new Hashtable();
+        dictionary.put("sputum","痰");
+        dictionary.put("nose","鼻涕");
+        dictionary.put("color","顏色");
+        dictionary.put("type","型態");
+
+        return dictionary;
     }
 }

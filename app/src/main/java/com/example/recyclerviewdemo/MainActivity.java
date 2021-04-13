@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //上傳資料到後端
     private void updateToApi() {
+        //Log.d(TAG, "updateToApi: 上傳!!"  );
+
     }
 
     //取得本地端json檔案
