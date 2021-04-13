@@ -14,25 +14,6 @@ public class TestData {
 
     private static final String TAG = "TestData";
 
-    public TestData(String jsonText){
-        try {
-            JSONObject object = new JSONObject(jsonText);
-            JSONArray array = object.getJSONArray("success");
-            for (int i = 0; i < array.length(); i++){
-                JSONObject newObject = array.getJSONObject(i);
-                String key = newObject.getString("key");
-                Object value = newObject.get("value");
-                if (value instanceof Boolean){
-                    TestData.SwitchItemBean data = new TestData.SwitchItemBean(key, (Boolean) value);
-                }else if (value instanceof JSONArray){
-
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     private int errorCode;
 
     private List<SwitchItemBean> switchItemList;
@@ -43,6 +24,14 @@ public class TestData {
         private String key;
         private boolean value;
 
+        public String getKey() {
+            return key;
+        }
+
+        public boolean isValue() {
+            return value;
+        }
+
         public SwitchItemBean(String key, boolean value){
             this.key = key;
             this.value = value;
@@ -52,6 +41,14 @@ public class TestData {
     public static class CheckBoxGroup {
         private String key;
         private List<String > value;
+
+        public String getKey() {
+            return key;
+        }
+
+        public List<String> getValue() {
+            return value;
+        }
 
         public CheckBoxGroup(String key, List<String> value) {
             this.key = key;

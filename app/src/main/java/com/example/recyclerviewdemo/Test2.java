@@ -24,9 +24,6 @@ public class Test2 {
             this.value = value;
         }
 
-        public InfoBean(String key, Object value) {
-        }
-
         public String getKey() {
             return key;
         }

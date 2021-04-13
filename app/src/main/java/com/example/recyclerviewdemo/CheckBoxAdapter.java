@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,11 +20,11 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
 
     private Context context;
 
-    private List<Test2.InfoBean> infoBeanList2= new ArrayList<>();
+    private List<TestData.CheckBoxGroup> checkBoxGroupList = new ArrayList<>();
 
-    public CheckBoxAdapter(Context context, List<Test2.InfoBean> infoBeanList2) {
+    public CheckBoxAdapter(Context context, List<TestData.CheckBoxGroup> checkBoxGroupList) {
         this.context = context;
-        this.infoBeanList2 = infoBeanList2;
+        this.checkBoxGroupList = checkBoxGroupList;
     }
 
     @NonNull
@@ -37,12 +36,12 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-          String[] str = infoBeanList2.get(position).getKey().split(",");  //以,切割
+          String[] str = checkBoxGroupList.get(position).getKey().split(",");  //以,切割
 
           holder.tvTitle.setText(str[0]);     //痰.鼻涕
           holder.tvTitleSub.setText(str[1]);  //顏色,型態
 
-          CheckBoxSubAdapter adapter = new CheckBoxSubAdapter(context, infoBeanList2.get(position).getValue());
+          CheckBoxSubAdapter adapter = new CheckBoxSubAdapter(context, checkBoxGroupList.get(position).getValue());
           holder.subRecycler.setAdapter(adapter);
           holder.subRecycler.setHasFixedSize(true);
           holder.subRecycler.setLayoutManager(new GridLayoutManager(context, 2));
@@ -50,7 +49,7 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return infoBeanList2.size();
+        return checkBoxGroupList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

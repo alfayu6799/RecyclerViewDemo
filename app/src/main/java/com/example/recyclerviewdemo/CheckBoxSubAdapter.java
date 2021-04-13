@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CheckBoxSubAdapter extends RecyclerView.Adapter<CheckBoxSubAdapter.ViewHolder>{
@@ -32,7 +33,6 @@ public class CheckBoxSubAdapter extends RecyclerView.Adapter<CheckBoxSubAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //Log.d(TAG, "onBindViewHolder: " + value.get(position));
         holder.checkBox.setText(value.get(position));
     }
 

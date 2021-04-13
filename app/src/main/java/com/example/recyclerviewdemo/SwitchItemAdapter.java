@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.ViewHolder>{
@@ -20,13 +22,12 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
     private static final String TAG = "SwitchItemAdapter";
 
     private Context context;
-    private List<Test1.InfoBean> infoBeanList = new ArrayList<>();
 
     private List<TestData.SwitchItemBean> switchItemBeanList = new ArrayList<>();
 
-    public SwitchItemAdapter(Context context, List<Test1.InfoBean> infoBeanList) {
+    public SwitchItemAdapter(Context context, List<TestData.SwitchItemBean> switchItemBeanList) {
         this.context = context;
-        this.infoBeanList = infoBeanList;
+        this.switchItemBeanList = switchItemBeanList;
     }
 
     @NonNull
@@ -38,14 +39,17 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textName.setText(infoBeanList.get(position).getKey());
-        holder.aSwitch.setChecked(infoBeanList.get(position).isValue());
+        Dictionary dictionary = getDictionary();
+
+        holder.textName.setText((CharSequence) dictionary.get(switchItemBeanList.get(position).getKey()));
+
+        holder.aSwitch.setChecked(switchItemBeanList.get(position).isValue());
         holder.aSwitch.setText("No");
         holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
-                    Log.d(TAG, "onCheckedChanged: " + infoBeanList.get(position).getKey());
+                    Log.d(TAG, "onCheckedChanged: " + switchItemBeanList.get(position).getKey());
                     holder.aSwitch.setText("Yes");
                 }else {
                     holder.aSwitch.setText("No");
@@ -54,9 +58,26 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
         });
     }
 
+    private Dictionary getDictionary() {
+        Dictionary dictionary = new Hashtable();
+        dictionary.put("headache","頭痛");
+        dictionary.put("fatigue","疲勞");
+        dictionary.put("soreMusclesJoints","肌肉痠痛");
+        dictionary.put("soreThroat","咽喉痛");
+        dictionary.put("cough","咳嗽");
+        dictionary.put("runnyNose","流鼻涕");
+        dictionary.put("diarrhea","腹瀉");
+        dictionary.put("chestTightness","胸悶");
+        dictionary.put("shortnessBreath","呼吸急促");
+        dictionary.put("taste","味覺");
+        dictionary.put("vomiting","嘔吐");
+
+        return dictionary;
+    }
+
     @Override
     public int getItemCount() {
-        return infoBeanList.size();
+        return switchItemBeanList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

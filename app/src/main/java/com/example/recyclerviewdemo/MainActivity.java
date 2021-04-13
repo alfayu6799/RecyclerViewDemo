@@ -1,23 +1,16 @@
 package com.example.recyclerviewdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.renderscript.Element;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.ScrollView;
-import android.widget.Switch;
-import android.widget.TextView;
+
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +19,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -37,9 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button update;
 
-    private List<Test1.InfoBean> infoBeanList = new ArrayList<>();
-    private List<Test2.InfoBean> infoBeanList2= new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,54 +38,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initData();
 
-        initData2();
-    }
-
-    private void initData2(){
-        List<String> stringList = new ArrayList<>();
-        String myJson2 = getJsonFromAssets(MainActivity.this,"test2.json");
-        try {
-            JSONObject jsonObject2 = new JSONObject(myJson2.toString());
-            JSONArray  jsonArray = jsonObject2.getJSONArray("info");
-            for (int j =0; j < jsonArray.length(); j++){
-                JSONObject object2 = jsonArray.getJSONObject(j);
-                String key2 = object2.getString("key");
-                Log.d(TAG, "initData2: " + object2.get("value"));
-
-                //infoBeanList2.add(new Test2.InfoBean(key2, stringList);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //CheckBoxAdapter checkBoxAdapter = new CheckBoxAdapter(this, infoBeanList2);
-        //getRecyclerView.setAdapter(checkBoxAdapter);
-        //getRecyclerView.setHasFixedSize(true);
-        //getRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initData() {
-        String myJson1 = getJsonFromAssets(MainActivity.this,"test1.json");
-        try {
-            JSONObject jsonObject = new JSONObject(myJson1.toString());
-            JSONArray array = jsonObject.getJSONArray("info");
-            for(int i=0; i < array.length(); i++){
-             JSONObject object = array.getJSONObject(i);
-             String key = object.getString("key");
-             boolean value = (boolean) object.get("value");
-                infoBeanList.add(new Test1.InfoBean(key, value));
-            }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        /*
         String myJson = getJsonFromAssets(MainActivity.this,"json.json");
-        TestData testData = new TestData(myJson);
 
-        List<TestData.SwitchItemBean> switchItemBeanList = testData.getSwitchItemList();
-        List<TestData.CheckBoxGroup> checkBoxGroupList = testData.getCheckBoxGroupList();
+        List<TestData.SwitchItemBean> switchItemBeanList = new ArrayList<>();  //switch用dataSource
+        List<TestData.CheckBoxGroup> checkBoxGroupList = new ArrayList<>();   //checkBox用dataSource
 
         try {
             JSONObject jsonObject = new JSONObject(myJson.toString());
@@ -105,24 +54,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 JSONObject newObject = array.getJSONObject(i);
                 String key = newObject.getString("key");
                 Object value = newObject.get("value");
-
                 if (value instanceof Boolean){
-                    TestData.SwitchItemBean data = new TestData.SwitchItemBean(key, (Boolean) value);
-                    switchItemBeanList.add(data);
+                    boolean booleanValue = newObject.getBoolean("value");
+                    switchItemBeanList.add(new TestData.SwitchItemBean(key, booleanValue));
                 }else if (value instanceof JSONArray){
-                    checkBoxGroupList.add(new TestData.CheckBoxGroup(key, (List<String>) value));
+                    JSONArray jsonValue = newObject.getJSONArray("value");
+                    List<String> listData = new ArrayList<>();
+                    for (int k = 0; k < jsonValue.length(); k++){
+                        listData.add(jsonValue.getString(k));
+                    }
+                    checkBoxGroupList.add(new TestData.CheckBoxGroup(key,listData));
                 }
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        */
 
-        SwitchItemAdapter adapter = new SwitchItemAdapter(this,infoBeanList);
+        SwitchItemAdapter adapter = new SwitchItemAdapter(this,switchItemBeanList);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        CheckBoxAdapter checkBoxAdapter = new CheckBoxAdapter(this, checkBoxGroupList);
+        getRecyclerView.setAdapter(checkBoxAdapter);
+        getRecyclerView.setHasFixedSize(true);
+        getRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initView() {
