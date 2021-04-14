@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,10 +21,15 @@ public class CheckBoxSubAdapter extends RecyclerView.Adapter<CheckBoxSubAdapter.
 
     private Context context;
     private List<String> value;
+    private int subPos;
 
-    public CheckBoxSubAdapter(Context context, List<String> value) {
+    private List<TestData.CheckBoxGroup> checkBoxGroupList = new ArrayList<>();
+
+    public CheckBoxSubAdapter(Context context, List<String> value, int subPos, List<TestData.CheckBoxGroup> checkBoxGroupList) {
         this.context = context;
         this.value = value;
+        this.subPos = subPos;
+        this.checkBoxGroupList = checkBoxGroupList;
     }
 
     @NonNull
@@ -35,14 +41,28 @@ public class CheckBoxSubAdapter extends RecyclerView.Adapter<CheckBoxSubAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Dictionary dictionary = getDictionary();
 
         holder.checkBox.setText((CharSequence) dictionary.get(value.get(position)));
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){ //有勾選才會寫入
+                    checkBoxGroupList.get(subPos).setChecked(checkBoxGroupList.get(subPos).getChecked()+"," + value.get(position));
+                }else {
+                    //這裡需要砍掉取消的資料
+
+                }
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return value.size();
+//        return value.size();
+        return checkBoxGroupList.get(subPos).getValue().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

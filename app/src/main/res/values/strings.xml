@@ -16,4 +16,6 @@
     <string name="nose" translatable="false">鼻涕</string>
     <string name="color" translatable="false">顏色</string>
     <string name="type" translatable="false">型態</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

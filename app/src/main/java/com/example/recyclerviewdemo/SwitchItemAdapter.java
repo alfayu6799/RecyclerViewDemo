@@ -23,11 +23,14 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
 
     private Context context;
 
-    private List<TestData.SwitchItemBean> switchItemBeanList = new ArrayList<>();
+    private List<TestData.SwitchItemBean> switchItemBeanList = new ArrayList<>();  //data's source
 
-    public SwitchItemAdapter(Context context, List<TestData.SwitchItemBean> switchItemBeanList) {
+    private SwitchItemAdapter.SwitchItemAdapterListener listener;  //listener
+
+    public SwitchItemAdapter(Context context, List<TestData.SwitchItemBean> switchItemBeanList, SwitchItemAdapterListener listener) {
         this.context = context;
         this.switchItemBeanList = switchItemBeanList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -49,10 +52,11 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
-                    Log.d(TAG, "onCheckedChanged: " + switchItemBeanList.get(position).getKey());
-                    holder.aSwitch.setText("Yes");
+                    switchItemBeanList.get(position).setValue(true);  //有選擇才會變成true
+                    holder.aSwitch.setText(R.string.yes);  
                 }else {
-                    holder.aSwitch.setText("No");
+                    switchItemBeanList.get(position).setValue(false);
+                    holder.aSwitch.setText(R.string.no);
                 }
             }
         });
@@ -91,5 +95,9 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
             textName = itemView.findViewById(R.id.tvSymptomItem);
             aSwitch = itemView.findViewById(R.id.swSymptom);
         }
+    }
+
+    public interface SwitchItemAdapterListener{
+        void onSwitchItemClick(TestData.SwitchItemBean data);
     }
 }

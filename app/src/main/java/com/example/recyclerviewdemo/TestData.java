@@ -32,18 +32,40 @@ public class TestData {
             return value;
         }
 
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public void setValue(boolean value) {
+            this.value = value;
+        }
+
         public SwitchItemBean(String key, boolean value){
             this.key = key;
             this.value = value;
         }
+
     }
 
     public static class CheckBoxGroup {
         private String key;
         private List<String > value;
+        private String checked;
 
         public String getKey() {
             return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public String getChecked() {
+            return checked;
+        }
+
+        public void setChecked(String checked) {
+            this.checked = checked;
         }
 
         public List<String> getValue() {
@@ -54,6 +76,7 @@ public class TestData {
             this.key = key;
             this.value = value;
         }
+
     }
 
     public int getErrorCode() {

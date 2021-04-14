@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.google.gson.JsonArray;
 
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,13 +22,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwitchItemAdapter.SwitchItemAdapterListener {
 
     private static final String TAG = "MainActivity";
 
     private RecyclerView recyclerView, getRecyclerView;
 
     private Button update;
+
+    private List<TestData.SwitchItemBean> switchItemBeanList = new ArrayList<>();  //switch用dataSource
+    private List<TestData.CheckBoxGroup> checkBoxGroupList = new ArrayList<>();   //checkBox用dataSource
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initData() {
 
         String myJson = getJsonFromAssets(MainActivity.this,"json.json");
-
-        List<TestData.SwitchItemBean> switchItemBeanList = new ArrayList<>();  //switch用dataSource
-        List<TestData.CheckBoxGroup> checkBoxGroupList = new ArrayList<>();   //checkBox用dataSource
 
         try {
             JSONObject jsonObject = new JSONObject(myJson.toString());
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
-        SwitchItemAdapter adapter = new SwitchItemAdapter(this,switchItemBeanList);
+        SwitchItemAdapter adapter = new SwitchItemAdapter(this,switchItemBeanList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -99,7 +100,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //上傳資料到後端
     private void updateToApi() {
-        //Log.d(TAG, "updateToApi: 上傳!!"  );
+        DateTime dt1 = new DateTime();
+        String SymptomRecordTime = dt1.toString("yyyy-MM-dd,HH:mm:ss");
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("targetId",8);
+            jsonObject.put("createDate", SymptomRecordTime);
+            //jsonObject.put("symptoms",jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "updateToApi: " + jsonObject.toString());
 
     }
 
@@ -123,4 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return jsonString;
     }
 
+    @Override   //接受來自Adapter的按鈕監控
+    public void onSwitchItemClick(TestData.SwitchItemBean data) {
+
+    }
 }

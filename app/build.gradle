@@ -40,4 +40,7 @@ dependencies {
 
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    //日期套件
+    implementation 'net.danlew:android.joda:2.10.9.1'
 }
