@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.gson.JsonArray;
-
 import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +20,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SwitchItemAdapter.SwitchItemAdapterListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
 
@@ -46,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initData() {
 
+        //解析json
         String myJson = getJsonFromAssets(MainActivity.this,"json.json");
 
         try {
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
-        SwitchItemAdapter adapter = new SwitchItemAdapter(this,switchItemBeanList, this);
+        SwitchItemAdapter adapter = new SwitchItemAdapter(this,switchItemBeanList);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -103,17 +102,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DateTime dt1 = new DateTime();
         String SymptomRecordTime = dt1.toString("yyyy-MM-dd,HH:mm:ss");
 
-        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
 
+        //switch
+        for(int i=0; i < switchItemBeanList.size(); i++){
+            JSONObject objectSwitch = new JSONObject();
+            try {
+                objectSwitch.put("key", switchItemBeanList.get(i).getKey());
+                objectSwitch.put("value",switchItemBeanList.get(i).isValue());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            array.put(objectSwitch);
+        }
+
+        //checkBox
+        for(int j = 0; j < checkBoxGroupList.size(); j++){
+            JSONObject objectCheckBox = new JSONObject();
+            try {
+                objectCheckBox.put("key", checkBoxGroupList.get(j).getKey());
+
+                List<String> list = new ArrayList<>();
+                String[] a = checkBoxGroupList.get(j).getChecked().split(",");
+                for (int k = 0; k < a.length; k++){
+                    list.add(a[k]);
+                }
+
+                objectCheckBox.put("value", list);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            array.put(objectCheckBox);
+        }
+
+        JSONObject finalObject = new JSONObject();
         try {
-            jsonObject.put("targetId",8);
-            jsonObject.put("createDate", SymptomRecordTime);
-            //jsonObject.put("symptoms",jsonArray);
+            finalObject.put("targetId", 8);
+            finalObject.put("createDate", SymptomRecordTime);
+            finalObject.put("symptoms", array);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, "updateToApi: " + jsonObject.toString());
 
+        Log.d(TAG, "updateToApi: " + finalObject.toString());
     }
 
     //取得本地端json檔案
@@ -136,8 +168,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return jsonString;
     }
 
-    @Override   //接受來自Adapter的按鈕監控
-    public void onSwitchItemClick(TestData.SwitchItemBean data) {
-
-    }
 }

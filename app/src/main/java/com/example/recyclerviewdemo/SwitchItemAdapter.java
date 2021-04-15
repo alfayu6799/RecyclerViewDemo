@@ -25,12 +25,9 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
 
     private List<TestData.SwitchItemBean> switchItemBeanList = new ArrayList<>();  //data's source
 
-    private SwitchItemAdapter.SwitchItemAdapterListener listener;  //listener
-
-    public SwitchItemAdapter(Context context, List<TestData.SwitchItemBean> switchItemBeanList, SwitchItemAdapterListener listener) {
+    public SwitchItemAdapter(Context context, List<TestData.SwitchItemBean> switchItemBeanList) {
         this.context = context;
         this.switchItemBeanList = switchItemBeanList;
-        this.listener = listener;
     }
 
     @NonNull
@@ -95,9 +92,5 @@ public class SwitchItemAdapter extends RecyclerView.Adapter<SwitchItemAdapter.Vi
             textName = itemView.findViewById(R.id.tvSymptomItem);
             aSwitch = itemView.findViewById(R.id.swSymptom);
         }
-    }
-
-    public interface SwitchItemAdapterListener{
-        void onSwitchItemClick(TestData.SwitchItemBean data);
     }
 }

@@ -47,7 +47,6 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxAdapter.ViewHo
         holder.tvTitle.setText((CharSequence) dictionary.get(title));
         holder.tvTitleSub.setText((CharSequence) dictionary.get(titleSub));
 
-        //CheckBoxSubAdapter adapter = new CheckBoxSubAdapter(context, checkBoxGroupList.get(position).getValue(), checkBoxGroupList.get(position).getKey(),checkBoxGroupList);
         CheckBoxSubAdapter adapter = new CheckBoxSubAdapter(context, checkBoxGroupList.get(position).getValue(),position, checkBoxGroupList);
         holder.subRecycler.setAdapter(adapter);
         holder.subRecycler.setHasFixedSize(true);

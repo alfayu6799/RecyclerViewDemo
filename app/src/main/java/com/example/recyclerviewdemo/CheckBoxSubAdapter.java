@@ -49,9 +49,14 @@ public class CheckBoxSubAdapter extends RecyclerView.Adapter<CheckBoxSubAdapter.
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){ //有勾選才會寫入
-                    checkBoxGroupList.get(subPos).setChecked(checkBoxGroupList.get(subPos).getChecked()+"," + value.get(position));
-                }else {
-                    //這裡需要砍掉取消的資料
+                    if (checkBoxGroupList.get(subPos).getChecked().isEmpty()){
+                        checkBoxGroupList.get(subPos).setChecked(value.get(position));
+                    }else {
+                        checkBoxGroupList.get(subPos).setChecked(checkBoxGroupList.get(subPos).getChecked()+"," + value.get(position));
+                    }
+                    Log.d(TAG, "勾選:" + checkBoxGroupList.get(subPos).getKey() +",value:" + checkBoxGroupList.get(subPos).getChecked());
+                }else {  //選取後又取消時要將原本的資料刪除
+
 
                 }
             }

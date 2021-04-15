@@ -61,7 +61,7 @@ public class TestData {
         }
 
         public String getChecked() {
-            return checked;
+            return checked == null ? "" : checked;
         }
 
         public void setChecked(String checked) {
